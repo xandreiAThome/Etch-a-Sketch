@@ -1,0 +1,75 @@
+:root {
+  --grid-size: 16;
+  --color: #0008ff;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #2c3333;
+  color: white;
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sketch-container {
+  width: clamp(300px, 50vw, 600px);
+  height: clamp(300px, 50vw, 600px);
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), 1fr);
+  grid-template-rows: repeat(var(--grid-size), 1fr);
+  background-color: white;
+}
+
+.pixel {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#color-picker {
+}
+
+button {
+  width: 128px;
+  padding: 8px;
+  display: block;
+  background-color: #cbe4de;
+  outline: none;
+  border: 2px solid black;
+  font-size: large;
+  border-radius: 6px;
+}
+
+#eraser {
+  margin: 16px;
+}
+
+.settings > .btn-on {
+  background-color: #0e8388;
+  color: white;
+}
