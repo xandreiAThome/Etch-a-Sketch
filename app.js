@@ -15,19 +15,11 @@ const pixel = document.querySelectorAll(".pixel");
 
 mouseDown = false;
 window.onmousedown = () => (mouseDown = true);
-window.ontouchstart = () => (mouseDown = true);
-
 window.onmouseup = () => (mouseDown = false);
-window.ontouchend = () => (mouseDown = false);
-console.log(window.ontouchstart);
 
 pixel.forEach((pixel) => {
   pixel.addEventListener(
     "mouseover",
-    () => mouseDown && (pixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
-  );
-  pixel.addEventListener(
-    "ontouchmove",
     () => mouseDown && (pixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
   );
 
@@ -37,11 +29,19 @@ pixel.forEach((pixel) => {
     "mousedown",
     () => (pixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
   );
-  pixel.addEventListener(
-    "touchstart",
-    () => (pixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
-  );
 });
+
+//
+// drawing logic for mobile
+window.ontouchmove = (e) => {
+  let mPixel = document.elementFromPoint(
+    e.touches[0].clientX,
+    e.touches[0].clientY
+  );
+  if (mPixel.classList[0] === "pixel") {
+    mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
+  }
+};
 
 //
 // Pick new color
