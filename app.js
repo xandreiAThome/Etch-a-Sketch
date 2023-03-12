@@ -57,5 +57,4 @@ const eraser = document.getElementById("eraser");
 eraser.addEventListener("click", () => {
   eraser.classList.toggle("btn-on");
   ERASE ? (ERASE = false) : (ERASE = true);
-  console.log(ERASE);
 });

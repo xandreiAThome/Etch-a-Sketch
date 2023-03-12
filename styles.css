@@ -10,7 +10,7 @@ body {
   background-color: #2c3333;
   color: white;
   font-family: sans-serif;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
 }
 
 .container {
@@ -42,16 +42,12 @@ body {
 .pixel {
   border-top: 1px solid black;
   border-left: 1px solid black;
-  user-drag: none;
   -webkit-user-drag: none;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   -webkit-tap-highlight-color: transparent;
-}
-
-#color-picker {
 }
 
 button {
