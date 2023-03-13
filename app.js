@@ -93,14 +93,25 @@ clear.addEventListener("click", () => {
 const gridSlider = document.getElementById("grid-slider");
 const gridValue = document.getElementById("grid-value");
 
-gridSlider.onmousemove = (e) => {
-  gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
-};
+if (!touchscreen) {
+  gridSlider.onmousemove = (e) => {
+    gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
+  };
 
-gridSlider.onmouseup = (e) => {
-  GRID = e.target.value;
-  makeGrid();
-};
+  gridSlider.onmouseup = (e) => {
+    GRID = e.target.value;
+    makeGrid();
+  };
+} else {
+  gridSlider.ontouchmove = (e) => {
+    gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
+  };
+
+  gridSlider.ontouchend = (e) => {
+    GRID = e.target.value;
+    makeGrid();
+  };
+}
 
 console.log(
   "ontouchstart" in window,
