@@ -11,10 +11,16 @@ body {
 
 .container {
   display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-container {
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-  height: 100%;
+  flex: 1;
 }
 
 .settings {
@@ -47,6 +53,7 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   -webkit-tap-highlight-color: transparent;
+  background-color: rgb(255, 255, 255);
 }
 
 button {
@@ -60,14 +67,15 @@ button {
   border-radius: 6px;
   transition: all 0.3s;
   position: relative;
+  margin: 6px;
+}
+
+#eraser {
+  margin-top: 16px;
 }
 
 button:active {
   top: 2px;
-}
-
-#eraser {
-  margin: 16px;
 }
 
 .settings > .btn-on {
@@ -82,8 +90,6 @@ button:active {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
@@ -95,6 +101,7 @@ button:active {
   color: white;
   text-decoration: none;
   font-size: clamp(12px, 1.5vw, 18px);
+  display: inline;
 }
 
 .footer > a > img {

@@ -1,7 +1,10 @@
 let COLOR = "#000000";
 let ERASE = false;
+let GRAYSCALE = false;
+let LIGHTEN = false;
 let GRID = 32;
 let touchscreen = "ontouchstart" in window || navigator.msMaxTouchPoints > 0;
+
 // Makes the grid
 function makeGrid() {
   const sketchContainer = document.querySelector(".sketch-container");
@@ -32,19 +35,31 @@ function draw(pixel) {
 
   if (!touchscreen) {
     pixel.forEach((pixel) => {
-      pixel.addEventListener(
-        "mouseover",
-        (e) =>
-          mouseDown &&
-          (e.target.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
-      );
+      pixel.addEventListener("mouseover", (e) => {
+        if (ERASE && mouseDown) {
+          eraseMode(e.target);
+        } else if (GRAYSCALE && mouseDown) {
+          grayscaleMode(e.target);
+        } else if (LIGHTEN && mouseDown) {
+          ligthenMode(e.target);
+        } else if (mouseDown) {
+          normalDraw(e.target);
+        }
+      });
 
       //
       // to color the grid on first click
-      pixel.addEventListener(
-        "mousedown",
-        (e) => (e.target.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
-      );
+      pixel.addEventListener("mousedown", (e) => {
+        if (ERASE) {
+          eraseMode(e.target);
+        } else if (GRAYSCALE) {
+          grayscaleMode(e.target);
+        } else if (LIGHTEN) {
+          ligthenMode(e.target);
+        } else {
+          normalDraw(e.target);
+        }
+      });
     });
   } else {
     //
@@ -55,7 +70,15 @@ function draw(pixel) {
         e.touches[0].clientY
       );
       if (mPixel.classList[0] === "pixel") {
-        mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
+        if (ERASE) {
+          eraseMode(mPixel);
+        } else if (GRAYSCALE) {
+          grayscaleMode(mPixel);
+        } else if (LIGHTEN) {
+          ligthenMode(mPixel);
+        } else {
+          normalDraw(mPixel);
+        }
       }
     };
 
@@ -67,7 +90,15 @@ function draw(pixel) {
         e.touches[0].clientY
       );
       if (mPixel.classList[0] === "pixel") {
-        mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
+        if (ERASE) {
+          eraseMode(mPixel);
+        } else if (GRAYSCALE) {
+          grayscaleMode(mPixel);
+        } else if (LIGHTEN) {
+          ligthenMode(mPixel);
+        } else {
+          normalDraw(mPixel);
+        }
       }
     };
   }
@@ -84,8 +115,8 @@ colorPicker.oninput = (e) => setColor(e.target.value);
 //
 // Erase button
 const eraser = document.getElementById("eraser");
-eraser.addEventListener("click", () => {
-  eraser.classList.toggle("btn-on");
+eraser.addEventListener("click", (e) => {
+  e.target.classList.toggle("btn-on");
   ERASE ? (ERASE = false) : (ERASE = true);
 });
 
@@ -97,6 +128,36 @@ clear.addEventListener("click", () => {
   pixel.forEach((pixel) => {
     pixel.style.backgroundColor = "#ffffff";
   });
+});
+
+//
+// Grayscale button
+const grayscaler = document.getElementById("grayscale");
+grayscaler.addEventListener("click", (e) => {
+  e.target.classList.toggle("btn-on");
+
+  if (GRAYSCALE) {
+    GRAYSCALE = false;
+  } else {
+    GRAYSCALE = true;
+    LIGHTEN && lighten.classList.toggle("btn-on");
+    LIGHTEN && (LIGHTEN = false);
+  }
+});
+
+//
+// lighten button
+const lighten = document.getElementById("lighten");
+lighten.addEventListener("click", (e) => {
+  e.target.classList.toggle("btn-on");
+
+  if (LIGHTEN) {
+    LIGHTEN = false;
+  } else {
+    LIGHTEN = true;
+    GRAYSCALE && grayscaler.classList.toggle("btn-on");
+    GRAYSCALE && (GRAYSCALE = false);
+  }
 });
 
 //
@@ -129,3 +190,54 @@ console.log(
   navigator.maxTouchPoints > 0,
   navigator.msMaxTouchPoints > 0
 );
+
+//
+// normal drawing mode
+function normalDraw(e) {
+  e.style.backgroundColor = COLOR;
+}
+
+// erase mode
+function eraseMode(e) {
+  if (e.style.backgroundColor !== undefined) {
+    e.style.backgroundColor = "#ffffff";
+  }
+}
+
+// grayscale mode
+function grayscaleMode(e) {
+  // element doesnt initially have backgroundcolor propert even when I set it
+  // so i have to resort to this mess, kill me
+  if (e.style.backgroundColor !== undefined && e.style.backgroundColor !== "") {
+    let color = e.style.backgroundColor;
+    let regex = color.replace(/[^,0-9]/g, "").split(",");
+    let rgb = regex.map((c) => {
+      return parseInt(c);
+    });
+
+    let r = rgb[0] - 25.5;
+    let g = rgb[1] - 25.5;
+    let b = rgb[2] - 25.5;
+
+    e.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+  } else {
+    e.style.backgroundColor = "rgb(229.5,229.5,229.5)";
+  }
+}
+
+// ligthen mode
+function ligthenMode(e) {
+  if (e.style.backgroundColor !== undefined && e.style.backgroundColor !== "") {
+    let color = e.style.backgroundColor;
+    let regex = color.replace(/[^,0-9]/g, "").split(",");
+    let rgb = regex.map((c) => {
+      return parseInt(c);
+    });
+
+    let r = rgb[0] + 25.5;
+    let g = rgb[1] + 25.5;
+    let b = rgb[2] + 25.5;
+
+    e.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+  }
+}
