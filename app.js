@@ -98,7 +98,7 @@ if (!touchscreen) {
     gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
   };
 
-  gridSlider.onmouseup = (e) => {
+  gridSlider.oninput = (e) => {
     GRID = e.target.value;
     makeGrid();
   };
@@ -107,8 +107,9 @@ if (!touchscreen) {
     gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
   };
 
-  gridSlider.ontouchend = (e) => {
+  gridSlider.oninput = (e) => {
     GRID = e.target.value;
+    gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
     makeGrid();
   };
 }
