@@ -58,6 +58,18 @@ function draw(pixel) {
         mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
       }
     };
+
+    //
+    // to color the grid on first click
+    window.ontouchstart = (e) => {
+      let mPixel = document.elementFromPoint(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
+      if (mPixel.classList[0] === "pixel") {
+        mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
+      }
+    };
   }
 }
 
