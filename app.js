@@ -2,7 +2,6 @@ let COLOR = "#000000";
 let ERASE = false;
 let GRID = 32;
 let touchscreen = "ontouchstart" in window || navigator.msMaxTouchPoints > 0;
-
 // Makes the grid
 function makeGrid() {
   const sketchContainer = document.querySelector(".sketch-container");
@@ -109,7 +108,6 @@ if (!touchscreen) {
 
   gridSlider.ontouchend = (e) => {
     GRID = e.target.value;
-    gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
     makeGrid();
   };
 }
