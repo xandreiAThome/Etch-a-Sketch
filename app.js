@@ -94,20 +94,20 @@ const gridSlider = document.getElementById("grid-slider");
 const gridValue = document.getElementById("grid-value");
 
 if (!touchscreen) {
-  gridSlider.onmousemove = (e) => {
+  gridSlider.oninput = (e) => {
     gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
   };
 
-  gridSlider.oninput = (e) => {
+  gridSlider.onmouseup = (e) => {
     GRID = e.target.value;
     makeGrid();
   };
 } else {
-  gridSlider.ontouchmove = (e) => {
+  gridSlider.oninput = (e) => {
     gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
   };
 
-  gridSlider.oninput = (e) => {
+  gridSlider.ontouchend = (e) => {
     GRID = e.target.value;
     gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
     makeGrid();
