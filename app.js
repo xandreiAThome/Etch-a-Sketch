@@ -1,47 +1,66 @@
-let COLOR = "#0008ff";
+let COLOR = "#000000";
 let ERASE = false;
+let GRID = 32;
+let touchscreen = "ontouchstart" in window || navigator.msMaxTouchPoints > 0;
 
 // Makes the grid
-const sketchContainer = document.querySelector(".sketch-container");
-for (let x = 0; x < 256; x++) {
-  const pixel = document.createElement("div");
-  pixel.classList.add("pixel");
-  sketchContainer.appendChild(pixel);
+function makeGrid() {
+  const sketchContainer = document.querySelector(".sketch-container");
+  sketchContainer.style.gridTemplateColumns = `repeat(${GRID}, 1fr)`;
+  sketchContainer.style.gridTemplateRows = `repeat(${GRID}, 1fr)`;
+
+  if (sketchContainer.hasChildNodes()) {
+    sketchContainer.replaceChildren();
+  }
+
+  for (let x = 0; x < GRID * GRID; x++) {
+    const pixel = document.createElement("div");
+    pixel.classList.add("pixel");
+    sketchContainer.appendChild(pixel);
+  }
+
+  draw(document.querySelectorAll(".pixel"));
 }
+
+makeGrid();
 
 //
 // drawing logic
-const pixel = document.querySelectorAll(".pixel");
+function draw(pixel) {
+  mouseDown = false;
+  window.addEventListener("mousedown", () => (mouseDown = true));
+  window.addEventListener("mouseup", () => (mouseDown = false));
 
-mouseDown = false;
-window.onmousedown = () => (mouseDown = true);
-window.onmouseup = () => (mouseDown = false);
+  if (!touchscreen) {
+    pixel.forEach((pixel) => {
+      pixel.addEventListener(
+        "mouseover",
+        (e) =>
+          mouseDown &&
+          (e.target.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
+      );
 
-pixel.forEach((pixel) => {
-  pixel.addEventListener(
-    "mouseover",
-    () => mouseDown && (pixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
-  );
-
-  //
-  // to color the grid on first click
-  pixel.addEventListener(
-    "mousedown",
-    () => (pixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
-  );
-});
-
-//
-// drawing logic for mobile
-window.ontouchmove = (e) => {
-  let mPixel = document.elementFromPoint(
-    e.touches[0].clientX,
-    e.touches[0].clientY
-  );
-  if (mPixel.classList[0] === "pixel") {
-    mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
+      //
+      // to color the grid on first click
+      pixel.addEventListener(
+        "mousedown",
+        (e) => (e.target.style.backgroundColor = ERASE ? "#ffffff" : COLOR)
+      );
+    });
+  } else {
+    //
+    // drawing logic for mobile
+    window.ontouchmove = (e) => {
+      let mPixel = document.elementFromPoint(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
+      if (mPixel.classList[0] === "pixel") {
+        mPixel.style.backgroundColor = ERASE ? "#ffffff" : COLOR;
+      }
+    };
   }
-};
+}
 
 //
 // Pick new color
@@ -58,3 +77,33 @@ eraser.addEventListener("click", () => {
   eraser.classList.toggle("btn-on");
   ERASE ? (ERASE = false) : (ERASE = true);
 });
+
+//
+// Clear button
+const clear = document.getElementById("clear");
+clear.addEventListener("click", () => {
+  const pixel = document.querySelectorAll(".pixel");
+  pixel.forEach((pixel) => {
+    pixel.style.backgroundColor = "#ffffff";
+  });
+});
+
+//
+// Sliding bar for the grid size
+const gridSlider = document.getElementById("grid-slider");
+const gridValue = document.getElementById("grid-value");
+
+gridSlider.onmousemove = (e) => {
+  gridValue.innerHTML = `Grid size: ${e.target.value}x${e.target.value}`;
+};
+
+gridSlider.onmouseup = (e) => {
+  GRID = e.target.value;
+  makeGrid();
+};
+
+console.log(
+  "ontouchstart" in window,
+  navigator.maxTouchPoints > 0,
+  navigator.msMaxTouchPoints > 0
+);
