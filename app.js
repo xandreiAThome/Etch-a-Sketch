@@ -1,13 +1,14 @@
 let COLOR = "#000000";
 let ERASE = false;
-let GRAYSCALE = false;
-let LIGHTEN = false;
+// 1 is grayscale, 2 is lighten
+let COLORMODE = ["off", "grayscale", "lighten"];
+let CURRENTMODE = 0; // current coloring mode
 let GRID = 32;
 let touchscreen = "ontouchstart" in window || navigator.msMaxTouchPoints > 0;
 
 // Makes the grid
 function makeGrid() {
-  const sketchContainer = document.querySelector(".sketch-container");
+  const sketchContainer = document.querySelector(".sketch");
   sketchContainer.style.gridTemplateColumns = `repeat(${GRID}, 1fr)`;
   sketchContainer.style.gridTemplateRows = `repeat(${GRID}, 1fr)`;
 
@@ -38,9 +39,9 @@ function draw(pixel) {
       pixel.addEventListener("mouseover", (e) => {
         if (ERASE && mouseDown) {
           eraseMode(e.target);
-        } else if (GRAYSCALE && mouseDown) {
+        } else if (COLORMODE[CURRENTMODE] === "grayscale" && mouseDown) {
           grayscaleMode(e.target);
-        } else if (LIGHTEN && mouseDown) {
+        } else if (COLORMODE[CURRENTMODE] === "lighten" && mouseDown) {
           ligthenMode(e.target);
         } else if (mouseDown) {
           normalDraw(e.target);
@@ -52,9 +53,9 @@ function draw(pixel) {
       pixel.addEventListener("mousedown", (e) => {
         if (ERASE) {
           eraseMode(e.target);
-        } else if (GRAYSCALE) {
+        } else if (COLORMODE[CURRENTMODE] === "grayscale") {
           grayscaleMode(e.target);
-        } else if (LIGHTEN) {
+        } else if (COLORMODE[CURRENTMODE] === "lighten") {
           ligthenMode(e.target);
         } else {
           normalDraw(e.target);
@@ -130,35 +131,42 @@ clear.addEventListener("click", () => {
   });
 });
 
+// COLOR MODES
 //
-// Grayscale button
+// Grayscale button - 1
 const grayscaler = document.getElementById("grayscale");
 grayscaler.addEventListener("click", (e) => {
-  e.target.classList.toggle("btn-on");
-
-  if (GRAYSCALE) {
-    GRAYSCALE = false;
+  if (COLORMODE[CURRENTMODE] === "grayscale") {
+    CURRENTMODE = 0;
   } else {
-    GRAYSCALE = true;
-    LIGHTEN && lighten.classList.toggle("btn-on");
-    LIGHTEN && (LIGHTEN = false);
+    CURRENTMODE = 1;
   }
+  toggleButton();
 });
 
 //
-// lighten button
+// lighten button - 2
 const lighten = document.getElementById("lighten");
 lighten.addEventListener("click", (e) => {
-  e.target.classList.toggle("btn-on");
-
-  if (LIGHTEN) {
-    LIGHTEN = false;
+  if (COLORMODE[CURRENTMODE] === "lighten") {
+    CURRENTMODE = 0;
   } else {
-    LIGHTEN = true;
-    GRAYSCALE && grayscaler.classList.toggle("btn-on");
-    GRAYSCALE && (GRAYSCALE = false);
+    CURRENTMODE = 2;
   }
+  toggleButton();
 });
+
+// Turns off other color mode when one is activated
+function toggleButton() {
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach((b) => {
+    if (COLORMODE[CURRENTMODE] === b.getAttribute("id")) {
+      b.classList.add("btn-on");
+    } else {
+      b.classList.remove("btn-on");
+    }
+  });
+}
 
 //
 // Sliding bar for the grid size

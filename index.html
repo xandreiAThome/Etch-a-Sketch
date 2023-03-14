@@ -19,10 +19,13 @@
           name="color picker"
           value="#000000"
         />
-        <button type="button" id="eraser" class="">Eraser</button>
-        <button type="button" id="clear">Clear</button>
-        <button type="button" id="grayscale">Grayscale</button>
-        <button type="button" id="lighten">Lighten</button>
+        <div class="btn-container">
+          <button type="button" id="eraser" class="">Eraser</button>
+          <button type="button" id="clear">Clear</button>
+          <button type="button" id="grayscale">Grayscale</button>
+          <button type="button" id="lighten">Lighten</button>
+        </div>
+
         <p id="grid-value">Grid size: 32x32</p>
         <input
           type="range"
@@ -34,7 +37,7 @@
         />
       </div>
 
-      <div class="sketch-container"></div>
+      <div class="sketch-container"><div class="sketch"></div></div>
     </div>
   </body>
 

@@ -20,6 +20,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
+  justify-content: center;
   flex: 1;
 }
 
@@ -28,6 +29,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex: 1;
 }
 
 .title {
@@ -36,6 +38,13 @@ body {
 }
 
 .sketch-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sketch {
   width: clamp(300px, 50vw, 764px);
   height: clamp(300px, 50vw, 764px);
   border-right: 1px solid gray;
@@ -57,17 +66,28 @@ body {
 }
 
 button {
-  width: 128px;
+  width: clamp(96px, 12vw, 128px);
   padding: 8px;
-  display: block;
+  display: inline-block;
   background-color: #cbe4de;
   outline: none;
   border: 2px solid black;
-  font-size: large;
+  font-size: 1rem;
+  font-weight: 500;
   border-radius: 6px;
   transition: all 0.3s;
   position: relative;
   margin: 6px;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 210px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 #eraser {
@@ -78,18 +98,19 @@ button:active {
   top: 2px;
 }
 
-.settings > .btn-on {
+.btn-container > .btn-on {
   background-color: #0e8388;
   color: white;
 }
 
-.settings > p {
+.btn-container > p {
   margin-top: 32px;
   margin-bottom: 0;
   font-weight: 600;
 }
 
 .footer {
+  margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
@@ -108,4 +129,12 @@ button:active {
   width: clamp(12px, 1.5vw, 18px);
   border-radius: 50%;
   margin-left: 6px;
+}
+
+#grid-slider {
+  margin-bottom: 24px;
+}
+
+#grid-value {
+  margin: 16px 0 0 0;
 }
