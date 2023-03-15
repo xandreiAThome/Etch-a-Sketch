@@ -70,12 +70,13 @@ function draw(pixel) {
         e.touches[0].clientX,
         e.touches[0].clientY
       );
+
       if (mPixel.classList[0] === "pixel") {
         if (ERASE) {
           eraseMode(mPixel);
-        } else if (GRAYSCALE) {
+        } else if (COLORMODE[CURRENTMODE] === "grayscale") {
           grayscaleMode(mPixel);
-        } else if (LIGHTEN) {
+        } else if (COLORMODE[CURRENTMODE] === "lighten") {
           ligthenMode(mPixel);
         } else {
           normalDraw(mPixel);
@@ -90,12 +91,13 @@ function draw(pixel) {
         e.touches[0].clientX,
         e.touches[0].clientY
       );
+
       if (mPixel.classList[0] === "pixel") {
         if (ERASE) {
           eraseMode(mPixel);
-        } else if (GRAYSCALE) {
+        } else if (COLORMODE[CURRENTMODE] === "grayscale") {
           grayscaleMode(mPixel);
-        } else if (LIGHTEN) {
+        } else if (COLORMODE[CURRENTMODE] === "lighten") {
           ligthenMode(mPixel);
         } else {
           normalDraw(mPixel);
@@ -158,7 +160,7 @@ lighten.addEventListener("click", (e) => {
 
 // Turns off other color mode when one is activated
 function toggleButton() {
-  const buttons = document.querySelectorAll("button");
+  const buttons = document.querySelectorAll(".color-mode");
   buttons.forEach((b) => {
     if (COLORMODE[CURRENTMODE] === b.getAttribute("id")) {
       b.classList.add("btn-on");
