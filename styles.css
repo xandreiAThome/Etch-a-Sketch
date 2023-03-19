@@ -84,14 +84,14 @@ button {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: 210px;
+  height: clamp(200px, 25vw, 264px);
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
 #eraser {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 button:active {
@@ -132,9 +132,9 @@ button:active {
 }
 
 #grid-slider {
-  margin-bottom: 24px;
+  margin: 0;
 }
 
 #grid-value {
-  margin: 16px 0 0 0;
+  margin: 8px 0 0 0;
 }

@@ -1,7 +1,7 @@
 let COLOR = "#000000";
 let ERASE = false;
-// 1 is grayscale, 2 is lighten
-let COLORMODE = ["off", "grayscale", "lighten"];
+// 1 is grayscale, 2 is lighten, 3 is rainbow
+let COLORMODE = ["off", "grayscale", "lighten", "rainbow"];
 let CURRENTMODE = 0; // current coloring mode
 let GRID = 32;
 let touchscreen = "ontouchstart" in window || navigator.msMaxTouchPoints > 0;
@@ -43,6 +43,8 @@ function draw(pixel) {
           grayscaleMode(e.target);
         } else if (COLORMODE[CURRENTMODE] === "lighten" && mouseDown) {
           ligthenMode(e.target);
+        } else if (COLORMODE[CURRENTMODE] === "rainbow" && mouseDown) {
+          rainbowMode(e.target);
         } else if (mouseDown) {
           normalDraw(e.target);
         }
@@ -57,6 +59,8 @@ function draw(pixel) {
           grayscaleMode(e.target);
         } else if (COLORMODE[CURRENTMODE] === "lighten") {
           ligthenMode(e.target);
+        } else if (COLORMODE[CURRENTMODE] === "rainbow") {
+          rainbowMode(e.target);
         } else {
           normalDraw(e.target);
         }
@@ -78,6 +82,8 @@ function draw(pixel) {
           grayscaleMode(mPixel);
         } else if (COLORMODE[CURRENTMODE] === "lighten") {
           ligthenMode(mPixel);
+        } else if (COLORMODE[CURRENTMODE] === "rainbow") {
+          rainbowMode(mPixel);
         } else {
           normalDraw(mPixel);
         }
@@ -99,6 +105,8 @@ function draw(pixel) {
           grayscaleMode(mPixel);
         } else if (COLORMODE[CURRENTMODE] === "lighten") {
           ligthenMode(mPixel);
+        } else if (COLORMODE[CURRENTMODE] === "rainbow") {
+          rainbowMode(mPixel);
         } else {
           normalDraw(mPixel);
         }
@@ -158,6 +166,18 @@ lighten.addEventListener("click", (e) => {
   toggleButton();
 });
 
+//
+// rainbow button - 3
+const rainbow = document.getElementById("rainbow");
+rainbow.addEventListener("click", (e) => {
+  if (COLORMODE[CURRENTMODE] === "rainbow") {
+    CURRENTMODE = 0;
+  } else {
+    CURRENTMODE = 3;
+  }
+  toggleButton();
+});
+
 // Turns off other color mode when one is activated
 function toggleButton() {
   const buttons = document.querySelectorAll(".color-mode");
@@ -195,11 +215,11 @@ if (!touchscreen) {
   };
 }
 
-console.log(
+/* console.log(
   "ontouchstart" in window,
   navigator.maxTouchPoints > 0,
   navigator.msMaxTouchPoints > 0
-);
+); */
 
 //
 // normal drawing mode
@@ -250,4 +270,13 @@ function ligthenMode(e) {
 
     e.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
   }
+}
+
+// rainbow mode
+function rainbowMode(e) {
+  let r = Math.floor(Math.random() * 256);
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256);
+
+  e.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
 }
