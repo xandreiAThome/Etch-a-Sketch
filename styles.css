@@ -82,7 +82,7 @@ button {
   font-weight: 500;
   border-radius: 6px;
   transition: all 0.3s;
-  position: relative;
+  /* position: relative; */
   margin: 6px;
 }
 
@@ -90,7 +90,7 @@ button {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: clamp(200px, 25vw, 264px);
+  height: clamp(182px, 25vw, 280px);
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -119,6 +119,7 @@ button:active {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-bottom: 8px;
 }
 
 .footer > a {
@@ -140,5 +141,5 @@ button:active {
 }
 
 #grid-value {
-  margin: 8px 0 0 0;
+  margin: 0;
 }
