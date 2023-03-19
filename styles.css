@@ -41,12 +41,6 @@ body {
   margin-top: clamp(20px, 4vw, 64px);
 }
 
-@media only screen and (max-width: 600px) {
-  .content-container {
-    flex: 0;
-  }
-}
-
 .sketch-container {
   flex: 1;
   display: flex;
@@ -55,8 +49,8 @@ body {
 }
 
 .sketch {
-  width: clamp(300px, 50vw, 764px);
-  height: clamp(300px, 50vw, 764px);
+  width: clamp(324px, 50vw, 764px);
+  height: clamp(324px, 50vw, 764px);
   border-right: 1px solid gray;
   border-bottom: 1px solid gray;
   display: grid;
@@ -146,4 +140,14 @@ button:active {
 
 #grid-value {
   margin: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .content-container {
+    flex: 0;
+  }
+
+  #grid-slider {
+    margin-bottom: 10px;
+  }
 }
