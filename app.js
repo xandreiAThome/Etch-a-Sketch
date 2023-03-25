@@ -39,12 +39,18 @@ function draw(pixel) {
       pixel.addEventListener("mouseover", (e) => {
         if (ERASE && mouseDown) {
           eraseMode(e.target);
-        } else if (COLORMODE[CURRENTMODE] === "grayscale" && mouseDown) {
-          grayscaleMode(e.target);
-        } else if (COLORMODE[CURRENTMODE] === "lighten" && mouseDown) {
-          ligthenMode(e.target);
-        } else if (COLORMODE[CURRENTMODE] === "rainbow" && mouseDown) {
-          rainbowMode(e.target);
+        } else if (mouseDown && CURRENTMODE != 0) {
+          // 1 is grayscale, 2 is lighten, 3 is rainbow
+          switch (CURRENTMODE) {
+            case 1:
+              grayscaleMode(e.target);
+              break;
+            case 2:
+              ligthenMode(e.target);
+              break;
+            case 3:
+              rainbowMode(e.target);
+          }
         } else if (mouseDown) {
           normalDraw(e.target);
         }
@@ -53,14 +59,21 @@ function draw(pixel) {
       //
       // to color the grid on first click
       pixel.addEventListener("mousedown", (e) => {
+        // 1 is grayscale, 2 is lighten, 3 is rainbow
+
         if (ERASE) {
           eraseMode(e.target);
-        } else if (COLORMODE[CURRENTMODE] === "grayscale") {
-          grayscaleMode(e.target);
-        } else if (COLORMODE[CURRENTMODE] === "lighten") {
-          ligthenMode(e.target);
-        } else if (COLORMODE[CURRENTMODE] === "rainbow") {
-          rainbowMode(e.target);
+        } else if (CURRENTMODE != 0) {
+          switch (CURRENTMODE) {
+            case 1:
+              grayscaleMode(e.target);
+              break;
+            case 2:
+              ligthenMode(e.target);
+              break;
+            case 3:
+              rainbowMode(e.target);
+          }
         } else {
           normalDraw(e.target);
         }
@@ -78,12 +91,18 @@ function draw(pixel) {
       if (mPixel.classList[0] === "pixel") {
         if (ERASE) {
           eraseMode(mPixel);
-        } else if (COLORMODE[CURRENTMODE] === "grayscale") {
-          grayscaleMode(mPixel);
-        } else if (COLORMODE[CURRENTMODE] === "lighten") {
-          ligthenMode(mPixel);
-        } else if (COLORMODE[CURRENTMODE] === "rainbow") {
-          rainbowMode(mPixel);
+        } else if (CURRENTMODE != 0) {
+          // 1 is grayscale, 2 is lighten, 3 is rainbow
+          switch (CURRENTMODE) {
+            case 1:
+              grayscaleMode(mPixel);
+              break;
+            case 2:
+              ligthenMode(mPixel);
+              break;
+            case 3:
+              rainbowMode(mPixel);
+          }
         } else {
           normalDraw(mPixel);
         }
@@ -101,12 +120,18 @@ function draw(pixel) {
       if (mPixel.classList[0] === "pixel") {
         if (ERASE) {
           eraseMode(mPixel);
-        } else if (COLORMODE[CURRENTMODE] === "grayscale") {
-          grayscaleMode(mPixel);
-        } else if (COLORMODE[CURRENTMODE] === "lighten") {
-          ligthenMode(mPixel);
-        } else if (COLORMODE[CURRENTMODE] === "rainbow") {
-          rainbowMode(mPixel);
+        } else if (CURRENTMODE != 0) {
+          // 1 is grayscale, 2 is lighten, 3 is rainbow
+          switch (CURRENTMODE) {
+            case 1:
+              grayscaleMode(mPixel);
+              break;
+            case 2:
+              ligthenMode(mPixel);
+              break;
+            case 3:
+              rainbowMode(mPixel);
+          }
         } else {
           normalDraw(mPixel);
         }
